@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>install</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+     /*  // plugin 插件，可以使用 app 实例拓展方法
+      const myPlugin = {
+        install(app, options) {
+          console.log(app);
+          console.log(options);
+
+          app.provide("name", "Dell Lee");
+          app.directive("focus", {
+            mounted(el) {
+              el.focus();
+            },
+          });
+        },
+      };
+
+      const app = Vue.createApp({
+        template: `
+        <div>
+            <my-title />
+        </div>
+        `,
+      });
+      app.component("my-title", {
+        template: `<div>
+            {{ name }}
+            <input v-focus />
+        </div>`,
+        inject: ["name"],
+      });
+
+      // 使用插件
+      app.use(myPlugin, { size: "small" });
+
+      const vm = app.mount("#app"); */
+
+      // ================================
+
+      const app = Vue.createApp({
+        template: `<div></div>`,
+      });
+
+      const vm = app.mount("#app");
+    </script>
+  </body>
+</html>

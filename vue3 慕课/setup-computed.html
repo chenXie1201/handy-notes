@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      // computed 计算属性
+      const app = Vue.createApp({
+        template: `
+        <div @click="handleClick">{{ count }}</div>
+        <div>{{ countAddFive }}</div>
+        `,
+        setup() {
+          const { ref, computed } = Vue;
+
+          const count = ref(0);
+          const handleClick = function () {
+            count.value++;
+          };
+
+          // 方法一
+          // const countAddFive = computed(() => {
+          //   return count.value + 5;
+          // });
+          // 方法二
+          const countAddFive = computed({
+            get: () => {
+              return count.value + 5;
+            },
+            set: (param) => {
+              console.log(param);
+              count.value = 10;
+            },
+          });
+
+          return {
+            count,
+            handleClick,
+            countAddFive,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

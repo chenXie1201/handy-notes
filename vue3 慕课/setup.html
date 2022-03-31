@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      /* const app = Vue.createApp({
+        template: "<div @click='handleClick'>{{ name }}</div>",
+        // created 实例被完全初始化之前执行
+        // 所以不能使用 this
+        setup(props, context) {
+          // return 必须返回,返回的内容可以在 template 中使用
+          return {
+            name: "dell",
+            handleClick: () => {
+              alert("click");
+            },
+          };
+        },
+        mounted(){
+            // 可以调用 setup
+            console.log(this.$options.setup())
+        }
+      });
+      app.mount("#app"); */
+
+      //   =======================================
+
+      /* const app = Vue.createApp({
+        // Vue 发现 name 是被 ref 处理的相应式数据就会对 name 进行处理，不需要我们写 name.value
+        template: `<div>{{ name }}</div>`,
+        setup(props, context) {
+          const { ref } = Vue;
+
+          // ref 利用 proxy 对 dell 封装成 proxy({value:'dell'}),这样的相应式引用
+          // 通过 proxy 对数据进行封装，当数据发生变化的时，触发模版等内容更新
+          // ref 处理基础类型的数据（String、Number、Boolen、Symbol、Undefind、Null）
+          let name = ref("dell");
+
+          setTimeout(() => {
+            name.value = "lee";
+          }, 2000);
+
+          return {
+            name,
+          };
+        },
+      });
+      app.mount("#app"); */
+
+      //   =======================================
+
+      /* // reactive 处理引用类型数据
+      const app = Vue.createApp({
+        template: `<div>{{ nameObj }}</div>`,
+        setup(props, context) {
+          const { reactive } = Vue;
+          const nameObj = reactive({
+            name: "Dell",
+          });
+
+          setTimeout(() => {
+            nameObj.name = "change Dell";
+          }, 2000);
+
+          return{
+            nameObj
+          }
+        },
+      });
+      app.mount("#app"); */
+
+      //   =======================================
+
+      /* const app = Vue.createApp({
+        template: `<div>{{ arr }}</div>`,
+        setup(props, context) {
+          const { reactive, readonly } = Vue;
+          let arr = readonly([123]);
+          arr[0] = [456];
+
+          return {
+            arr,
+          };
+        },
+      });
+      app.mount("#app"); */
+
+      //   =======================================
+
+      /* const app = Vue.createApp({
+        template: `<div>{{ name }}</div><div>{{ personObj }}</div>`,
+        setup(props, context) {
+          const { reactive, toRefs } = Vue;
+
+          let personObj = reactive({
+            name: "Dell",
+          });
+
+          setTimeout(() => {
+            personObj.name = "change Dells";
+          }, 2000);
+
+          const { name } = toRefs(personObj);
+
+          // toRefs 的底层工作，直接解构是不能响应式的，需要将整个 personObj 封装处理
+          // reactive 把 personObj 封装成 Proxy({name:"Dell"})
+          // toRefs 把 personObj 封装成 { name:Proxy({value:'Dell'}) }
+
+          return {
+            name,
+            personObj,
+          };
+        },
+      });
+      app.mount("#app"); */
+
+      //   =======================================
+
+      /* const app = Vue.createApp({
+        template: `<div>{{ name }}---{{ age }}</div>`,
+        setup(props, context) {
+          const { reactive, toRefs, toRef } = Vue;
+          const data = reactive({ name: "dell" });
+          const { name } = toRefs(data);
+          const age = toRef(data, "age");
+
+          setTimeout(() => {
+            age.value = 18;
+          }, 2000);
+
+          return {
+            name,
+            age,
+          };
+        },
+      });
+      app.mount("#app"); */
+
+      //   =======================================
+
+      /* const app = Vue.createApp({
+        template: `<div>{{ name }}---{{ age }}</div>`,
+        setup(props, context) {
+          const { reactive, toRefs, toRef } = Vue;
+          const data = reactive({ name: "dell" });
+          const { name } = toRefs(data);
+          const age = toRef(data, "age");
+
+          setTimeout(() => {
+            age.value = 18;
+          }, 2000);
+
+          return {
+            name,
+            age,
+          };
+        },
+      });
+      app.mount("#app"); */
+
+      //   =======================================
+
+      const app = Vue.createApp({
+        template: `<child @change="..."  />`,
+      });
+      app.component("child", {
+        template: `<div>child</div>`,
+        setup(props, context) {
+          const { attrs, slots, emit } = context;
+          // console.log(attrs)
+          // console.log(slots.default())
+          function handleClick() {
+            emit("change");
+          }
+          return {
+            handleClick,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

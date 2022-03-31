@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  const app = Vue.createApp({
+    template: `
+    Name:<input v-model="name" />
+    <div>{{ name }}</div>
+    `,
+    setup() {
+      const { reactive, toRefs, watchEffect } = Vue;
+      const person = reactive({
+        name: "",
+      });
+      const { name } = toRefs(person);
+
+      // watchEffect 函数和 watch 方法的区别：
+      // 立即执行，immediate,页面加载立即执行
+      // 不需要传递你要监听的内容，方法会自己感知，只需要传递一个回调函数
+      // 不能获取改变之前的数据
+      const stop = watchEffect(() => {
+        console.log(person.name);
+      });
+      setTimeout(() => {
+        stop();
+      }, 5000);
+
+      return {
+        name,
+      };
+    },
+  });
+  app.mount("#app");
+</script>

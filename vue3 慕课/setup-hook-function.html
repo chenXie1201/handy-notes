@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  const app = Vue.createApp({
+    template: `
+      <div>Hello Word</div>
+      `,
+    setup() {
+      const { onBeforeMount, onMounted, onBeforeUnmount, onUnmounted } = Vue;
+
+      // setup 中不存在 beforeCreate,created 这两个生命周期函数
+      // 这是因为 setup 函数就是在 beforeCreate,created 中执行的
+
+      onBeforeMount(() => {
+        console.log("onBeforeMount");
+      });
+      onMounted(() => {
+        console.log("onMounted");
+      });
+      onBeforeUnmount(() => {
+        console.log("onBeforeUnmount");
+      });
+      onUnmounted(() => {
+        console.log("onUnmounted");
+      });
+    },
+  });
+  app.mount("#app");
+</script>

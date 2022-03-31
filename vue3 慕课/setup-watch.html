@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  const app = Vue.createApp({
+    template: `
+      Name:<input v-model="name" />
+        {{ person }}
+      `,
+    // 监听基础数据
+    /* setup(props, context) {
+      const { ref, watch, reactive } = Vue;
+      const name = ref("");
+
+      // 具备一定的惰性 lazy
+      // 参数可以拿到原始值和当前值
+      watch(name, (newVal, oldVal) => {
+        console.log(newVal, oldVal);
+      });
+
+      return { name };
+    }, */
+
+    setup() {
+      const { reactive, toRefs, watch } = Vue;
+      const person = reactive({
+        name: "",
+        age: 20,
+      });
+
+      // 监听整个对象、name
+      /* watch(person, (newVal, oldVal) => {
+        console.log(newVal);
+      });
+      watch(
+        () => person.name,
+        (newVal, oldVal) => {
+          console.log(newVal);
+        }
+      ); */
+
+      // 用一个监听器承载多个数据
+      watch(
+        [() => person.name, () => person.age],
+        ([nameNewVal], [ageNewVal]) => {
+          console.log(newValArr);
+        }
+      );
+
+      const { name } = toRefs(person);
+      return { person, name };
+    },
+  });
+  app.mount("#app");
+</script>

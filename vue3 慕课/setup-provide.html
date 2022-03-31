@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  const app = Vue.createApp({
+    template: `
+      <div>
+        <child />  
+      </div>
+      `,
+    setup() {
+      const { ref, readonly, provide } = Vue;
+      const name = ref("张三");
+
+      provide("name", readonly(name));
+      provide("changeName", (val) => {
+        name.value = val;
+      });
+    },
+  });
+
+  app.component("child", {
+    template: `
+      <div @click="handleClick">{{name}}</div>
+      `,
+    setup() {
+      const { ref, inject } = Vue;
+      const name = inject("name");
+      const changeName = inject("changeName");
+      const handleClick = () => {
+        changeName("里氏");
+      };
+
+      return {
+        name,
+        handleClick,
+      };
+    },
+  });
+
+  app.mount("#app");
+</script>
